@@ -2,7 +2,7 @@ using System;
 using FluentAssertions;
 using Xunit;
 
-namespace KahunaSluice.Core.Tests
+namespace KahunaSluice.Core
 {
   public class ConsumerServiceTests
   {
