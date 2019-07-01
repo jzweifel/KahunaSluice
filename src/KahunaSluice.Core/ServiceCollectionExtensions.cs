@@ -6,7 +6,7 @@ namespace KahunaSluice.Core
 {
   public static class ServiceCollectionExtensions
   {
-    public static void AddKahunaSluice(this ServiceCollection serviceCollection)
+    public static void AddKahunaSluice(this IServiceCollection serviceCollection)
     {
       if (serviceCollection == null)
         throw new ArgumentNullException(nameof(serviceCollection));
