@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace KahunaSluice.Core
 {
-  public class ConsumerMethodProvider
+  public class ConsumerMethodProvider : IConsumerMethodProvider
   {
     private readonly Assembly[] _assemblies;
 

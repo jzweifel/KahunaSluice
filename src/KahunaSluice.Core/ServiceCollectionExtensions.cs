@@ -12,6 +12,7 @@ namespace KahunaSluice.Core
         throw new ArgumentNullException(nameof(serviceCollection));
 
       serviceCollection.AddSingleton<IHostedService, ConsumerService>();
+      serviceCollection.AddSingleton<IConsumerMethodProvider, ConsumerMethodProvider>();
     }
   }
 }

@@ -23,9 +23,23 @@ namespace KahunaSluice.Core
 
       ServiceCollectionExtensions.AddKahunaSluice(services);
 
-      ServiceDescriptor expected = new ServiceDescriptor(typeof(IHostedService), typeof(ConsumerService), default(ServiceLifetime));
+      ServiceDescriptor expected = new ServiceDescriptor(typeof(IHostedService), typeof(ConsumerService), default);
 
-      services.Should().ContainSingle().And.ContainEquivalentOf(expected);
+      services.Should().ContainEquivalentOf(expected);
+    }
+
+
+
+    [Fact]
+    public void AddKahunaSluice_RegistersConsumerMethodProviderSingleton()
+    {
+      var services = new ServiceCollection();
+
+      ServiceCollectionExtensions.AddKahunaSluice(services);
+
+      ServiceDescriptor expected = new ServiceDescriptor(typeof(IConsumerMethodProvider), typeof(ConsumerMethodProvider), default);
+
+      services.Should().ContainEquivalentOf(expected);
     }
 
     [Fact]
