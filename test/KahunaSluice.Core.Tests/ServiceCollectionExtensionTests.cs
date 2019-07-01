@@ -1,6 +1,7 @@
 using System;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Xunit;
 
 namespace KahunaSluice.Core
@@ -22,7 +23,7 @@ namespace KahunaSluice.Core
 
       ServiceCollectionExtensions.AddKahunaSluice(services);
 
-      ServiceDescriptor expected = new ServiceDescriptor(typeof(IConsumerService), typeof(ConsumerService), default(ServiceLifetime));
+      ServiceDescriptor expected = new ServiceDescriptor(typeof(IHostedService), typeof(ConsumerService), default(ServiceLifetime));
 
       services.Should().ContainSingle().And.ContainEquivalentOf(expected);
     }

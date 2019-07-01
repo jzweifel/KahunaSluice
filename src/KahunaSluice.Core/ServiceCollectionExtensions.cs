@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace KahunaSluice.Core
 {
@@ -10,7 +11,7 @@ namespace KahunaSluice.Core
       if (serviceCollection == null)
         throw new ArgumentNullException(nameof(serviceCollection));
 
-      serviceCollection.AddSingleton<IConsumerService, ConsumerService>();
+      serviceCollection.AddSingleton<IHostedService, ConsumerService>();
     }
   }
 }
