@@ -4,7 +4,7 @@
 
 ---
 
-**KahunaSluice is an annotation-driven Kafka streaming library for _.NET Core_**
+KahunaSluice is an annotation-driven abstraction library over [Confluent.Kafka](https://github.com/confluentinc/confluent-kafka-dotnet) for .NET Core.
 
 ## Aim of this Library
 
