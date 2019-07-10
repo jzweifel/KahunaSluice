@@ -35,5 +35,12 @@ namespace KahunaSluice.Core
       var usageAttribute = ((IList<AttributeUsageAttribute>)typeof(ConsumerAttribute).GetCustomAttributes(typeof(AttributeUsageAttribute), false)).First();
       usageAttribute.Inherited.Should().BeFalse();
     }
+
+    [Fact]
+    public void ConsumerAttribute_HasTopicName()
+    {
+      var attribute = new ConsumerAttribute("my-cool-topic");
+      attribute.TopicName.Should().Be("my-cool-topic");
+    }
   }
 }

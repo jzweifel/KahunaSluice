@@ -18,7 +18,7 @@ namespace HelloWorld
       await host.RunAsync();
     }
 
-    [ConsumerAttribute]
+    [ConsumerAttribute("my-topic")]
     public static void MyCoolMethod(ConsumeResult<string, string> message)
     {
       System.Console.WriteLine($"Received message on {message.Topic}[{message.Partition.Value}] @" +

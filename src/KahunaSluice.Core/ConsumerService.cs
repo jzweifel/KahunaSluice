@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Confluent.Kafka;
@@ -26,10 +27,10 @@ namespace KahunaSluice.Core
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-      var methods = _consumerMethodProvider.GetConsumerMethods();
+      var consumerMethods = _consumerMethodProvider.GetConsumerMethods();
       var consumer = _consumerProvider.CreateConsumer<string, string>();
 
-      consumer.Subscribe("my-topic");
+      consumer.Subscribe(consumerMethods.Select(m => m.Key));
 
       try
       {
@@ -39,9 +40,10 @@ namespace KahunaSluice.Core
           {
             var consumeResult = consumer.Consume(stoppingToken);
             _logger.LogInformation($"Received message at {consumeResult.TopicPartitionOffset}: ${consumeResult.Value}");
-            foreach (var method in methods)
+            foreach (var consumerMethod in consumerMethods.Where(m => m.Key == consumeResult.Topic))
             {
-              method.Invoke(default, new[] { consumeResult });
+              foreach (var method in consumerMethod)
+                method.Method.Invoke(default, new[] { consumeResult });
             }
           }
           catch (ConsumeException e)

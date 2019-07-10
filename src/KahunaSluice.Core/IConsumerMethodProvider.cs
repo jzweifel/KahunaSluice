@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using System.Reflection;
+using System.Linq;
 
 namespace KahunaSluice.Core
 {
   public interface IConsumerMethodProvider
   {
-    IEnumerable<MethodInfo> GetConsumerMethods();
+    IEnumerable<IGrouping<string, ConsumerMethod>> GetConsumerMethods();
   }
 }

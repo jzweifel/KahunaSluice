@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using FluentAssertions;
@@ -41,7 +42,7 @@ namespace KahunaSluice.Core
 
       var methods = provider.GetConsumerMethods();
 
-      methods.Should().Contain(x => x.Name == "SomeMethod");
+      methods.Single(m => m.Key == "topic-name").Should().Contain(m => m.Method.Name == "SomeMethod");
     }
 
     /// <summary>
@@ -69,7 +70,7 @@ namespace KahunaSluice.Core
     /// Creates an assembly with the following type:
     /// public class SomeType
     /// {
-    ///    [ConsumerAttribute]
+    ///    [ConsumerAttribute("topic-name")]
     ///    public void SomeMethod {}
     /// }
     /// </summary>
@@ -82,8 +83,8 @@ namespace KahunaSluice.Core
 
       var methodBuilder = CreateSomeMethod(typeBuilder);
 
-      var attributeConstructor = typeof(ConsumerAttribute).GetConstructor(new Type[] { });
-      var attributeBuilder = new CustomAttributeBuilder(attributeConstructor, new object[] { });
+      var attributeConstructor = typeof(ConsumerAttribute).GetConstructor(new Type[] { typeof(string) });
+      var attributeBuilder = new CustomAttributeBuilder(attributeConstructor, new object[] { "topic-name" });
       methodBuilder.SetCustomAttribute(attributeBuilder);
 
       typeBuilder.CreateType();
