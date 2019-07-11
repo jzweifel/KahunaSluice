@@ -4,5 +4,6 @@ workflow "Build workflow" {
 }
 
 action "cake build" {
-    uses = "./build.sh"
+    uses = "actions/bin/sh@master"
+    args = ["./build.sh"]
 }
