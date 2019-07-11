@@ -1,9 +1,9 @@
 workflow "Build workflow" {
     on = "push"
-    resolves = ["cake build"]
+    resolves = ["dotnet build"]
 }
 
-action "cake build" {
-    uses = "actions/bin/sh@master"
-    args = ["./build.sh"]
+action "dotnet build" {
+    uses = "Azure/github-actions/dotnetcore-cli@master"
+    args = ["build"]
 }
