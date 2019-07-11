@@ -4,6 +4,14 @@
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
 
     <LangVersion>7.1</LangVersion>
+
+    <PackageId>KahunaSluice.Core</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>jzweifel</Authors>
+    <Title>KahunaSluice</Title>
+    <Description>KahunaSluice is an annotation-driven abstraction library over Confluent.Kafka for .NET Core.</Description>
+    <PackageTags>Kafka;Streaming</PackageTags>
+    <RepositoryUrl>https://github.com/jzweifel/KahunaSluice</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
