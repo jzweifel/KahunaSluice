@@ -3,3 +3,7 @@ obj/
 .ionide/
 .vscode/
 bin/
+
+### Cake ###
+tools/*
+!tools/packages.config
