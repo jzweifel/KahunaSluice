@@ -1,11 +1,27 @@
 workflow "Build workflow" {
   on = "push"
-  resolves = ["dotnet build"]
+  resolves = ["dotnet nuget push"]
 }
 
 workflow "Pull Request Status Checks" {
   resolves = "PR Status Giphy"
   on = "pull_request"
+}
+
+action "dotnet nuget push" {
+    needs = ["dotnet pack"]
+    uses = "Azure/github-actions/dotnetcore-cli@master"
+    args = ["nuget", "push", "src/KahunaSluice.Core/out/*", "-k", "$NUGET_KEY", "-s", "$NUGET_SOURCE"]
+    secrets = ["NUGET_KEY"]
+    env = {
+        NUGET_SOURCE = "https://api.nuget.org/v3/index.json"
+    }
+}
+
+action "dotnet pack" {
+    needs = ["dotnet build"]
+    uses = "Azure/github-actions/dotnetcore-cli@master"
+    args = ["pack", "src/KahunaSluice.Core/", "-o", "out"]
 }
 
 action "dotnet build" {
