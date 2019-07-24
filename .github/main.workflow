@@ -21,7 +21,7 @@ action "dotnet nuget push" {
 action "dotnet pack" {
   needs = ["dotnet build"]
   uses = "Azure/github-actions/dotnetcore-cli@master"
-  args = ["pack", "src/KahunaSluice.Core/", "-o", "out"]
+  args = ["pack", "src/KahunaSluice.Core/", "-o", "out", "--version-suffix", "$GITHUB_SHA"]
 }
 
 action "dotnet build" {
