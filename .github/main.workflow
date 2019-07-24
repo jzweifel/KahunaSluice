@@ -1,5 +1,5 @@
 workflow "Build workflow" {
-  on = "push"
+  on = ["push", "pull_request"]
   resolves = ["dotnet nuget push"]
 }
 
