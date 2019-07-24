@@ -1,6 +1,11 @@
-workflow "Build workflow" {
+workflow "Build workflow on push" {
+  resolves = ["dotnet nuget master push"]
   on = "push"
-  resolves = ["dotnet nuget push"]
+}
+
+workflow "Build workflow on PR" {
+  resolves = ["dotnet nuget pr push"]
+  on = "pull_request"
 }
 
 workflow "Pull Request Status Checks" {
@@ -8,8 +13,8 @@ workflow "Pull Request Status Checks" {
   on = "pull_request"
 }
 
-action "dotnet nuget push" {
-  needs = ["dotnet pack"]
+action "dotnet nuget master push" {
+  needs = ["dotnet master pack"]
   uses = "Azure/github-actions/dotnetcore-cli@master"
   args = ["nuget", "push", "src/KahunaSluice.Core/out/*", "-k", "$NUGET_KEY", "-s", "$NUGET_SOURCE"]
   secrets = ["NUGET_KEY"]
@@ -18,10 +23,38 @@ action "dotnet nuget push" {
   }
 }
 
-action "dotnet pack" {
+action "dotnet master pack" {
+  needs = ["master-branch-filter"]
+  uses = "Azure/github-actions/dotnetcore-cli@master"
+  args = ["pack", "src/KahunaSluice.Core/", "-o", "out"]
+}
+
+action "master-branch-filter" {
   needs = ["dotnet build"]
+  uses = "actions/bin/filter@master"
+  args = "branch master"
+}
+
+action "dotnet nuget pr push" {
+  needs = ["dotnet pr pack"]
+  uses = "Azure/github-actions/dotnetcore-cli@master"
+  args = ["nuget", "push", "src/KahunaSluice.Core/out/*", "-k", "$NUGET_KEY", "-s", "$NUGET_SOURCE"]
+  secrets = ["NUGET_KEY"]
+  env = {
+    NUGET_SOURCE = "https://api.nuget.org/v3/index.json"
+  }
+}
+
+action "dotnet pr pack" {
+  needs = ["pr-filter"]
   uses = "Azure/github-actions/dotnetcore-cli@master"
   args = ["pack", "src/KahunaSluice.Core/", "-o", "out", "--version-suffix", "dev-$GITHUB_SHA"]
+}
+
+action "pr-filter" {
+  needs = ["dotnet build"]
+  uses = "actions/bin/filter@master"
+  args = "action 'opened|synchronize'"
 }
 
 action "dotnet build" {
