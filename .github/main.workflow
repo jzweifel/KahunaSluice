@@ -70,8 +70,14 @@ action "dotnet test" {
 }
 
 action "dotnet restore" {
+  needs = ["not deleted filter"]
   uses = "Azure/github-actions/dotnetcore-cli@master"
   args = ["restore"]
+}
+
+action "not deleted filter" {
+  uses = "actions/bin/filter@master"
+  args = "not deleted"
 }
 
 action "PR Status Giphy" {
