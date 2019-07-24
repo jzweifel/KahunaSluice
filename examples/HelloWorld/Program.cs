@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using KahunaSluice.Core;
@@ -21,7 +22,7 @@ namespace HelloWorld
     [ConsumerAttribute("my-topic")]
     public static void MyCoolMethod(ConsumeResult<string, string> message)
     {
-      System.Console.WriteLine($"Received message on {message.Topic}[{message.Partition.Value}] @" +
+      Console.WriteLine($"Received message on {message.Topic}[{message.Partition.Value}] @" +
       $" offset {message.Offset.Value}: Key: {message.Key}, Value: {message.Value}.");
     }
   }
