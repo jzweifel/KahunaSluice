@@ -6,7 +6,7 @@
     <LangVersion>7.1</LangVersion>
 
     <PackageId>KahunaSluice.Core</PackageId>
-    <VersionPrefix>0.2.0</VersionPrefix>
+    <VersionPrefix>0.3.0</VersionPrefix>
     <Authors>jzweifel</Authors>
     <Title>KahunaSluice</Title>
     <Description>KahunaSluice is an annotation-driven abstraction library over Confluent.Kafka for .NET Core.</Description>
